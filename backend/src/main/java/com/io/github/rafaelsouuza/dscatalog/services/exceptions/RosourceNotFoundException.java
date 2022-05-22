@@ -1,9 +1,9 @@
 package com.io.github.rafaelsouuza.dscatalog.services.exceptions;
 
-public class EntityNotFoundException extends RuntimeException {
+public class RosourceNotFoundException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
-    public EntityNotFoundException(String message) {
+    public RosourceNotFoundException(String message) {
         super(message);
     }
 }

@@ -3,11 +3,12 @@ package com.io.github.rafaelsouuza.dscatalog.services;
 import com.io.github.rafaelsouuza.dscatalog.dto.CategoryDTO;
 import com.io.github.rafaelsouuza.dscatalog.entities.Category;
 import com.io.github.rafaelsouuza.dscatalog.repositories.CategoryRepository;
-import com.io.github.rafaelsouuza.dscatalog.services.exceptions.EntityNotFoundException;
+import com.io.github.rafaelsouuza.dscatalog.services.exceptions.RosourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,7 +28,7 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public CategoryDTO findById(Long id) {
         Optional<Category> obj = categoryRepository.findById(id);
-        Category entity = obj.orElseThrow(() -> new EntityNotFoundException("Entity not found"));
+        Category entity = obj.orElseThrow(() -> new RosourceNotFoundException("Entity not found"));
         return new CategoryDTO(entity);
     }
 
@@ -37,5 +38,17 @@ public class CategoryService {
         entity.setName(dto.getName());
         entity = categoryRepository.save(entity);
         return new CategoryDTO(entity);
+    }
+
+    @Transactional
+    public CategoryDTO update(Long id, CategoryDTO dto) {
+        try {
+            Category entity = categoryRepository.getReferenceById(id);
+            entity.setName(dto.getName());
+            entity = categoryRepository.save(entity);
+            return new CategoryDTO(entity);
+        } catch (EntityNotFoundException e) {
+            throw new RosourceNotFoundException("Id not found " + id);
+        }
     }
 }

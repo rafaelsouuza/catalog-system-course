@@ -4,6 +4,7 @@ import com.io.github.rafaelsouuza.dscatalog.entities.User;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,6 +15,7 @@ public class UserDTO implements Serializable {
     private Long id;
 
     @NotBlank(message = "Campo obrigatório")
+    @Size(min = 5, message = "Deve ter enter 5 e 60 caracteres")
     private String firstName;
     private String lastName;
 

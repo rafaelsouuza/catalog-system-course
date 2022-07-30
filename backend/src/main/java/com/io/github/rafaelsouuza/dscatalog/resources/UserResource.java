@@ -3,6 +3,7 @@ package com.io.github.rafaelsouuza.dscatalog.resources;
 import com.io.github.rafaelsouuza.dscatalog.dto.ProductDTO;
 import com.io.github.rafaelsouuza.dscatalog.dto.UserDTO;
 import com.io.github.rafaelsouuza.dscatalog.dto.UserInsertDTO;
+import com.io.github.rafaelsouuza.dscatalog.dto.UserUpdateDTO;
 import com.io.github.rafaelsouuza.dscatalog.entities.User;
 import com.io.github.rafaelsouuza.dscatalog.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +47,9 @@ public class UserResource {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<UserDTO> update(@Valid @PathVariable Long id, @Valid @RequestBody UserDTO dto) {
-        dto = userService.update(id, dto);
-        return ResponseEntity.ok().body(dto);
+    public ResponseEntity<UserDTO> update(@Valid @PathVariable Long id, @Valid @RequestBody UserUpdateDTO dto) {
+        UserDTO newDto = userService.update(id, dto);
+        return ResponseEntity.ok().body(newDto);
     }
 
     @DeleteMapping(value = "/{id}")
